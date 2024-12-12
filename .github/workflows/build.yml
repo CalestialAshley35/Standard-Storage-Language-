@@ -1,0 +1,33 @@
+name: Build WebAssembly
+
+on:
+  push:
+    branches:
+      - main  # Trigger this action on push to the 'main' branch
+  pull_request:
+    branches:
+      - main  # Trigger this action on pull request to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use an Ubuntu environment
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Emscripten
+      uses: emscripten-core/setup-emscripten@v2
+      with:
+        sdk: latest  # Use the latest version of Emscripten
+
+    - name: Build WebAssembly
+      run: |
+        emcc main.cpp -o index.html -s WASM=1 -s EXPORTED_FUNCTIONS="['_store_data', '_see_data']" -s EXTRA_EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
+
+    - name: Upload WebAssembly files to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./  # Directory containing your compiled files (index.html, index.js, main.wasm)
+        publish_branch: gh-pages  # The branch GitHub Pages uses to serve the content
