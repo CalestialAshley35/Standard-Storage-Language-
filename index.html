@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Storage WebAssembly</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, input, button {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Background and text styling */
+        body {
+            background-color: #f7f8fa;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4a90e2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #5f6368;
+        }
+
+        /* Form container */
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .form-container button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #357ab7;
+        }
+
+        /* Output section */
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>WebAssembly C++ Storage</h1>
+
+    <div class="form-container">
+        <h2>Store Data</h2>
+        <input type="text" id="data-name" placeholder="Data Name" required>
+        <input type="text" id="data-type" placeholder="Data Type (int, double, string)" required>
+        <input type="text" id="data-value" placeholder="Data Value" required>
+        <button onclick="storeData()">Store</button>
+    </div>
+
+    <div class="form-container" style="margin-top: 20px;">
+        <h2>See Data</h2>
+        <input type="text" id="see-name" placeholder="Data Name" required>
+        <button onclick="seeData()">See</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        var Module = {
+            onRuntimeInitialized: function() {
+                console.log("WebAssembly Loaded!");
+            }
+        };
+
+        function storeData() {
+            const name = document.getElementById('data-name').value;
+            const type = document.getElementById('data-type').value;
+            const value = document.getElementById('data-value').value;
+
+            // Simulate calling C++ function (WebAssembly)
+            Module._store_data(name, type, value);
+
+            alert("Data stored!");
+        }
+
+        function seeData() {
+            const name = document.getElementById('see-name').value;
+
+            // Simulate calling C++ function (WebAssembly)
+            Module._see_data(name);
+        }
+    </script>
+
+    <script src="index.js"></script>
+</body>
+</html>
